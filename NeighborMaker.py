@@ -34,9 +34,13 @@ class NeighborhoodDataFile:
 
 
 def main():
-    data = NeighborhoodDataFile(25)
-    jdata = json.dumps(data.__dict__)
 
+    data = NeighborhoodDataFile(25)
+    jdata = json.dumps(data.__dict__, indent=2)
+    file_name = data.name + ".json"
+    output = open(file_name, "w")
+    output.write(jdata)
+    output.close()
 
 
 if __name__ == "__main__":
