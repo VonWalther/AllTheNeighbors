@@ -9,6 +9,7 @@ from datetime import datetime
 
 # Need to create object to place in to Json here...
 class NeighborhoodDataFile:
+# Might come back to the naming of the data fields, given that class member namse shows up in the dictanary pairs in the json.
     def __init__(self, number_of_pairs, data_set_name="Neighborhood", x_limit=1000, y_limit=1000):
         data_set_name = data_set_name + "_" + str(number_of_pairs) + ":" + str(x_limit) + "x" + str(y_limit)
         self.name = data_set_name
