@@ -30,6 +30,11 @@ When you are done with both of the programs, submit your code on the USB flash d
 
 *\_\_\_\_\_\_ Resume Provided  (10 pts)          \_\_\_\_\_\_ Professional Dress (10 pts)*
 
+
+
+/*************************************************** Every thing past here is Judges Eyes Only ***********************************************************************/
+# AI
+## Code I
 *import json*  
 *import numpy as np*  
 *from sklearn.neighbors import NearestNeighbors*  
@@ -109,7 +114,7 @@ When you are done with both of the programs, submit your code on the USB flash d
 *if \_\_name\_\_ \== "\_\_main\_\_":*  
     *main()*
 
-## \==========================================
+## Code II
 
 *import json*  
 *import math*
