@@ -1,0 +1,34 @@
+{
+    "allLocations": [
+        {
+            "closestPoint": [
+                5,
+                5
+            ],
+            "location": [
+                4,
+                4
+            ]
+        },
+        {
+            "closestPoint": [
+                4,
+                4
+            ],
+            "location": [
+                5,
+                5
+            ]
+        },
+        {
+            "closestPoint": [
+                4,
+                4
+            ],
+            "location": [
+                1,
+                1
+            ]
+        }
+    ]
+}
