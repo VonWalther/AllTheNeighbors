@@ -19,6 +19,7 @@
 ######################################################################
 
 import json
+import sys
 
 
 #
@@ -106,16 +107,28 @@ def compare_schemas(submission, answer, stretch=False, points=80):
     return int((points * (total - incorrect)) / float(total))
 
 if __name__ == "__main__":
-    with open('stretch_response_example.json', 'r') as f_submission:
+    submission_file = sys.argv[1]
+    answer_file = sys.argv[2]
+    stretch = False
+    points = 80
+
+    if len(sys.argv) > 3:
+        stretch = bool(sys.argv[3])
+    
+    if len(sys.argv) > 4:
+        points = int(sys.argv[4])
+
+    with open(submission_file, 'r') as f_submission:
         submission = json.loads(f_submission.read())
     
-    submission['allLocations'][0]['location'] = [ 100, 100 ]
-    submission['allLocations'][2]['secondClosestPoint'] = [ 100, 100 ]
-    
-    with open('stretch_response_example.json', 'r') as f_answer:
+    with open(answer_file, 'r') as f_answer:
         answer = json.loads(f_answer.read())
     
-    sort_schema(submission, True)
-    sort_schema(answer, True)
+    if not check_schema(submission, stretch):
+        print('Schemas do not match - check manually')
+        exit
 
-    print(compare_schemas(submission, answer, True))
+    sort_schema(submission, stretch)
+    sort_schema(answer, stretch)
+
+    print(f'Points: {compare_schemas(submission, answer, stretch)}')
