@@ -2,25 +2,23 @@
 #                                                                    #
 #  AllTheNeighbors Validator                                         #
 #                                                                    #
-#  1  Sorts both submission and answer key by                        #
+#  1  Check for incorrect schema and return early if presented       #
+#                                                                    #
+#  2  Sorts both submission and answer key by                        #
 #     a  location x -> y                                             #
 #     b  closestPoint x -> y                                         #
 #     c  secondClosestPoint x -> y (stretch only)                    #
 #     d  thirdClosestPoint x -> y (stretch only)                     #
 #                                                                    #
-#  2  Runs a diff on the two                                         #
+#  3  Runs a diff on the two                                         #
 #                                                                    #
-#  3  Scores based on % output correct                               #
-#     a  Incorrect schema -> 0 + flag                                #
-#     b  % of incorrect array comparisons / total array comparisons  #
-#     c  Score of (b) out of 80                                      #
+#  4  Scores based on % output correct                               #
+#     a  % of incorrect array comparisons / total array comparisons  #
+#     b  Score of (a) out of 80                                      #
 #                                                                    #
 ######################################################################
 
 import json
-
-with open('stretch_response_example.json', 'r') as f_submission:
-    submission = json.loads(f_submission.read())
 
 #
 #  Compares submission schema to expected schema
@@ -41,3 +39,23 @@ def check_schema(submission, stretch=False):
             return False
     
     return True
+
+
+def sort_schema(schema, stretch=False):
+    schema['allLocations'].sort(key=lambda location : location['location'][0])
+    schema['allLocations'].sort(key=lambda location : location['location'][1])
+    schema['allLocations'].sort(key=lambda location : location['closestPoint'][0])
+    schema['allLocations'].sort(key=lambda location : location['closestPoint'][1])
+    
+    if stretch:
+        schema['allLocations'].sort(key=lambda location : location['secondClosestPoint'][0])
+        schema['allLocations'].sort(key=lambda location : location['secondClosestPoint'][1])
+        schema['allLocations'].sort(key=lambda location : location['thirdClosestPoint'][0])
+        schema['allLocations'].sort(key=lambda location : location['thirdClosestPoint'][1])
+
+if __name__ == "__main__":
+    with open('stretch_response_example.json', 'r') as f_submission:
+        submission = json.loads(f_submission.read())
+    
+    sort_schema(submission, True)
+    print(submission)
