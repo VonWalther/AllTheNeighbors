@@ -47,17 +47,17 @@ def check_schema(submission, stretch=False):
 #  Sorts the schema using a standard formula
 #  Allows for direct comparison of two similar schemas
 #
-def sort_schema(schema, stretch=False):
-    schema['allLocations'].sort(key=lambda location : location['location'][0])
-    schema['allLocations'].sort(key=lambda location : location['location'][1])
-    schema['allLocations'].sort(key=lambda location : location['closestPoint'][0])
-    schema['allLocations'].sort(key=lambda location : location['closestPoint'][1])
-    
+def sort_schema(schema, stretch=False):    
     if stretch:
-        schema['allLocations'].sort(key=lambda location : location['secondClosestPoint'][0])
-        schema['allLocations'].sort(key=lambda location : location['secondClosestPoint'][1])
-        schema['allLocations'].sort(key=lambda location : location['thirdClosestPoint'][0])
         schema['allLocations'].sort(key=lambda location : location['thirdClosestPoint'][1])
+        schema['allLocations'].sort(key=lambda location : location['thirdClosestPoint'][0])
+        schema['allLocations'].sort(key=lambda location : location['secondClosestPoint'][1])
+        schema['allLocations'].sort(key=lambda location : location['secondClosestPoint'][0])
+    
+    schema['allLocations'].sort(key=lambda location : location['closestPoint'][1])
+    schema['allLocations'].sort(key=lambda location : location['closestPoint'][0])
+    schema['allLocations'].sort(key=lambda location : location['location'][1])
+    schema['allLocations'].sort(key=lambda location : location['location'][0])
 
 
 #
