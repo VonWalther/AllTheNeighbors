@@ -8,6 +8,7 @@ To use this tool, run `python3 validator.py` from `<project_root>/validator`.
 
 ```
 python3 validator.py '<submission_filename>.json' '<answer_filename>.json' <stretch> <points>
+```
 
 ### CL arguments
 
