@@ -20,6 +20,7 @@
 
 import json
 
+
 #
 #  Compares submission schema to expected schema
 #  Returns True if match, False if not
@@ -41,6 +42,10 @@ def check_schema(submission, stretch=False):
     return True
 
 
+#
+#  Sorts the schema using a standard formula
+#  Allows for direct comparison of two similar schemas
+#
 def sort_schema(schema, stretch=False):
     schema['allLocations'].sort(key=lambda location : location['location'][0])
     schema['allLocations'].sort(key=lambda location : location['location'][1])
@@ -53,9 +58,64 @@ def sort_schema(schema, stretch=False):
         schema['allLocations'].sort(key=lambda location : location['thirdClosestPoint'][0])
         schema['allLocations'].sort(key=lambda location : location['thirdClosestPoint'][1])
 
+
+#
+#  Compares the results of two schemas
+#  Compares by coordinate pair, i.e., length 2 array
+#  Returns a whole number of points out of the total available
+#  Accounts for unmatched lengths of lists
+#
+def compare_schemas(submission, answer, stretch=False, points=80):
+    incorrect = 0
+    total = 0
+
+    submission_locations = submission['allLocations']
+    answer_locations = answer['allLocations']
+
+    # Fix length of answer_locations to that of submission_locations
+    # Add additional length of answer_locations to total
+    if len(submission_locations) < len(answer_locations):
+        total_locations = len(answer_locations)
+        answer_locations = answer_locations[:len(submission_locations)]
+        total += (total_locations - len(answer_locations)) * 2
+
+    # Fix length of submission_locations to that of answer_locations
+    # Add additional length of submission_locations to incorrect
+    if len(submission_locations) > len(answer_locations):
+        total_locations = len(submission_locations)
+        submission_locations = submission_locations[:len(answer_locations)]
+        incorrect += (total_locations - len(submission_locations)) * 2
+        if stretch:
+            incorrect *= 2
+
+    for submission_location, answer_location in zip(submission_locations, answer_locations):
+        total += 2
+
+        if submission_location['location'] != answer_location['location']:
+            incorrect += 1
+        if submission_location['closestPoint'] != answer_location['closestPoint']:
+            incorrect += 1
+        if stretch and submission_location['secondClosestPoint'] != answer_location['secondClosestPoint']:
+            incorrect += 1
+        if stretch and submission_location['thirdClosestPoint'] != answer_location['thirdClosestPoint']:
+            incorrect += 1
+    
+    if stretch:
+        total *= 2
+    
+    return int((points * (total - incorrect)) / float(total))
+
 if __name__ == "__main__":
     with open('stretch_response_example.json', 'r') as f_submission:
         submission = json.loads(f_submission.read())
     
+    submission['allLocations'][0]['location'] = [ 100, 100 ]
+    submission['allLocations'][2]['secondClosestPoint'] = [ 100, 100 ]
+    
+    with open('stretch_response_example.json', 'r') as f_answer:
+        answer = json.loads(f_answer.read())
+    
     sort_schema(submission, True)
-    print(submission)
+    sort_schema(answer, True)
+
+    print(compare_schemas(submission, answer, True))
