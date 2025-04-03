@@ -1,0 +1,76 @@
+{
+    "allLocations": [
+        {
+            "closestPoint": [
+                5,
+                5
+            ],
+            "secondClosestPoint": [
+                1,
+                1
+            ],
+            "thirdClosestPoint": [
+                10,
+                10
+            ],
+            "location": [
+                4,
+                4
+            ]
+        },
+        {
+            "closestPoint": [
+                4,
+                4
+            ],
+            "secondClosestPoint": [
+                1,
+                1
+            ],
+            "thirdClosestPoint": [
+                10,
+                10
+            ],
+            "location": [
+                5,
+                5
+            ]
+        },
+        {
+            "closestPoint": [
+                4,
+                4
+            ],
+            "secondClosestPoint": [
+                5,
+                5
+            ],
+            "thirdClosestPoint": [
+                10,
+                10
+            ],
+            "location": [
+                1,
+                1
+            ]
+        },
+        {
+            "closestPoint": [
+                5,
+                5
+            ],
+            "secondClosestPoint": [
+                4,
+                4
+            ],
+            "thirdClosestPoint": [
+                1,
+                1
+            ],
+            "location": [
+                10,
+                10
+            ]
+        }
+    ]
+}
