@@ -138,4 +138,5 @@ if __name__ == "__main__":
     sort_schema(submission, stretch)
     sort_schema(answer, stretch)
 
-    print(f'Points: {compare_schemas(submission, answer, stretch)}')
+    print(
+        f'Points: {compare_schemas(submission, answer, stretch, points=points)}')
