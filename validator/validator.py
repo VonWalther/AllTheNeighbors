@@ -29,17 +29,17 @@ import sys
 #
 def check_schema(submission, stretch=False):
     submission_keys = list(submission.keys())
-    if submission_keys != [ 'allLocations' ]:
+    if submission_keys != ['allLocations']:
         return False
-    
+
     for i, location in enumerate(submission['allLocations']):
         location_keys = sorted(list(location.keys()))
-        if not stretch and location_keys != [ 'closestPoint', 'location' ]:
+        if not stretch and location_keys != ['closestPoint', 'location']:
             return False
 
-        if stretch and location_keys != [ 'closestPoint', 'location', 'secondClosestPoint', 'thirdClosestPoint' ]:
+        if stretch and location_keys != ['closestPoint', 'location', 'secondClosestPoint', 'thirdClosestPoint']:
             return False
-    
+
     return True
 
 
@@ -47,17 +47,23 @@ def check_schema(submission, stretch=False):
 #  Sorts the schema using a standard formula
 #  Allows for direct comparison of two similar schemas
 #
-def sort_schema(schema, stretch=False):    
+def sort_schema(schema, stretch=False):
     if stretch:
-        schema['allLocations'].sort(key=lambda location : location['thirdClosestPoint'][1])
-        schema['allLocations'].sort(key=lambda location : location['thirdClosestPoint'][0])
-        schema['allLocations'].sort(key=lambda location : location['secondClosestPoint'][1])
-        schema['allLocations'].sort(key=lambda location : location['secondClosestPoint'][0])
-    
-    schema['allLocations'].sort(key=lambda location : location['closestPoint'][1])
-    schema['allLocations'].sort(key=lambda location : location['closestPoint'][0])
-    schema['allLocations'].sort(key=lambda location : location['location'][1])
-    schema['allLocations'].sort(key=lambda location : location['location'][0])
+        schema['allLocations'].sort(
+            key=lambda location: location['thirdClosestPoint'][1])
+        schema['allLocations'].sort(
+            key=lambda location: location['thirdClosestPoint'][0])
+        schema['allLocations'].sort(
+            key=lambda location: location['secondClosestPoint'][1])
+        schema['allLocations'].sort(
+            key=lambda location: location['secondClosestPoint'][0])
+
+    schema['allLocations'].sort(
+        key=lambda location: location['closestPoint'][1])
+    schema['allLocations'].sort(
+        key=lambda location: location['closestPoint'][0])
+    schema['allLocations'].sort(key=lambda location: location['location'][1])
+    schema['allLocations'].sort(key=lambda location: location['location'][0])
 
 
 #
@@ -100,11 +106,12 @@ def compare_schemas(submission, answer, stretch=False, points=80):
             incorrect += 1
         if stretch and submission_location['thirdClosestPoint'] != answer_location['thirdClosestPoint']:
             incorrect += 1
-    
+
     if stretch:
         total *= 2
-    
+
     return int((points * (total - incorrect)) / float(total))
+
 
 if __name__ == "__main__":
     submission_file = sys.argv[1]
@@ -113,17 +120,17 @@ if __name__ == "__main__":
     points = 80
 
     if len(sys.argv) > 3:
-        stretch = bool(sys.argv[3])
-    
+        stretch = "True" == sys.argv[3]
+
     if len(sys.argv) > 4:
         points = int(sys.argv[4])
 
     with open(submission_file, 'r') as f_submission:
         submission = json.loads(f_submission.read())
-    
+
     with open(answer_file, 'r') as f_answer:
         answer = json.loads(f_answer.read())
-    
+
     if not check_schema(submission, stretch):
         print('Schemas do not match - check manually')
         exit
